@@ -1,0 +1,59 @@
+version: "3.9"
+
+services:
+  db:
+    image: mariadb:10.6
+    container_name: api_rest_db
+    environment:
+      - MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD:-root}
+      - MARIADB_USER=${DB_USER:-user}
+      - MARIADB_PASSWORD=${DB_PASSWORD:-pass}
+      - MARIADB_DATABASE=${DB_NAME:-api_rest_db}
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      - app-network
+    ports:
+    - "3306:3306"
+
+  api:
+    image: node:18-alpine
+    container_name: api_rest
+    working_dir: /app
+    volumes:
+      - .:/app
+    environment:
+      - NODE_ENV=development
+      - DB_HOST=${DB_HOST}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - DB_DIALECT=${DB_DIALECT}
+    command: sh -c "npm install && npm run dev"
+    depends_on:
+      - db
+    networks:
+      - app-network
+    ports:
+      - "3000:3000"
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: api_phpmyadmin
+    environment:
+      - PMA_HOST=${DB_HOST}
+      - PMA_USER=${DB_USER:-user}
+      - PMA_PASSWORD=${DB_PASSWORD:-pass}
+    depends_on:
+      - db
+    networks:
+      - app-network
+    ports:
+      - "8080:80"
+
+volumes:
+  db-data:
+
+networks:
+  app-network:
+    driver: bridge

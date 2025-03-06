@@ -4,18 +4,18 @@ const userController = require("../controllers/order");
 const auth = require("../auth/auth");
 
 // Route pour récupérer toutes les commandes
-router.get("/", /**auth,**/ userController.getAllOrders);
+router.get("/",auth, userController.getAllOrders);
 
 // Route pour récupérer une commande par son id
-router.get("/:id", /** auth, **/ userController.getOrderById);
+router.get("/:id", auth, userController.getOrderById);
 
 // Route pour créer une commande
-router.post("/", userController.createOrder);
+router.post("/", auth, userController.createOrder);
 
 // Route pour mettre à jour une commande
-router.put("/:id",/**auth,*/ userController.updateOrder);
+router.put("/:id",auth, userController.updateOrder);
 
 // Route pour supprimer une commande
-router.delete("/:id",/**auth,*/ userController.deleteOrder);
+router.delete("/:id",auth, userController.deleteOrder);
 
 module.exports = router;

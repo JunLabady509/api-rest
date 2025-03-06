@@ -9,7 +9,7 @@ User.hasMany(Order, {
 });
 
 Order.belongsTo(User, {
-  foreignKey: 'user_id',
+  foreignKey: 'id',
 });
 
 module.exports = {

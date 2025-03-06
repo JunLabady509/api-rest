@@ -5,7 +5,7 @@ async function syncDatabase() {
   try {
     await sequelize.sync(); 
     await User.sync({ alter: true }); 
-    await Order.sync(); 
+    await Order.sync({alter: true}); 
     console.log("Modèles synchronisés avec la base de données avec succès.");
   } catch (error) {
     console.error("Erreur lors de la synchronisation de la base de données :", error);

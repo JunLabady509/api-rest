@@ -7,16 +7,33 @@ const morgan = require("morgan");
 
 const swaggerUi = require("swagger-ui-express");
 const swaggerJSDoc = require("swagger-jsdoc");
+
 const options = {
   definition: {
     openapi: "3.0.0",
     info: {
       title: "API Documentation",
       version: "1.0.0",
-      description: "Documentation de l'API",
+      description: "Documentation de l'API avec authentification",
     },
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+          description:
+            "Entrez votre token avec le préfixe `Bearer `, exemple: `Bearer abcde12345`",
+        },
+      },
+    },
+    security: [
+      {
+        bearerAuth: [],
+      },
+    ],
   },
-  apis: ["./src/docs/*"],
+  apis: ["./src/docs/*.js"],
 };
 
 const app = express();

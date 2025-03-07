@@ -7,6 +7,16 @@
 
 /**
  * @swagger
+ * components:
+ *   securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ */
+
+/**
+ * @swagger
  * /orders:
  *   get:
  *     summary: Récupère toutes les commandes
@@ -27,12 +37,13 @@
  *                   id:
  *                     type: integer
  *                     example: 101
- *                   product:
+ *                   status:
  *                     type: string
- *                     example: "Livre"
- *                   quantity:
- *                     type: integer
- *                     example: 2
+ *                     example: "PENDING"
+ *                   totalAmount:
+ *                     type: number
+ *                     format: float
+ *                     example: 29.99
  */
 
 /**
@@ -62,12 +73,13 @@
  *                 id:
  *                   type: integer
  *                   example: 101
- *                 product:
+ *                 status:
  *                   type: string
- *                   example: "Livre"
- *                 quantity:
- *                   type: integer
- *                   example: 2
+ *                   example: "PENDING"
+ *                 totalAmount:
+ *                   type: number
+ *                   format: float
+ *                   example: 29.99
  *       404:
  *         description: Commande non trouvée.
  */
@@ -79,6 +91,8 @@
  *     summary: Crée une nouvelle commande
  *     description: Enregistre une nouvelle commande dans la base de données.
  *     tags: [Orders]
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -86,12 +100,13 @@
  *           schema:
  *             type: object
  *             properties:
- *               product:
+ *               status:
  *                 type: string
- *                 example: "Livre"
- *               quantity:
- *                 type: integer
- *                 example: 2
+ *                 example: "CONFIRMED"
+ *               totalAmount:
+ *                 type: number
+ *                 format: float
+ *                 example: 49.99
  *     responses:
  *       201:
  *         description: Commande créée avec succès.
@@ -122,12 +137,13 @@
  *           schema:
  *             type: object
  *             properties:
- *               product:
+ *               status:
  *                 type: string
- *                 example: "Ordinateur"
- *               quantity:
- *                 type: integer
- *                 example: 1
+ *                 example: "SHIPPED"
+ *               totalAmount:
+ *                 type: number
+ *                 format: float
+ *                 example: 59.99
  *     responses:
  *       200:
  *         description: Commande mise à jour avec succès.

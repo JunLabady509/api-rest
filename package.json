@@ -6,7 +6,8 @@
   "scripts": {
     "test": "NODE_ENV=test node src/app.js",
     "start": "NODE_ENV=production node src/app.js",
-    "dev": "NODE_ENV=development nodemon src/app.js"
+    "dev": "NODE_ENV=development nodemon src/app.js",
+    "swagger-autogen": "node ./src/docs/swagger.js"
   },
   "keywords": [
     "api"

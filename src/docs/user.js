@@ -7,6 +7,17 @@
 
 /**
  * @swagger
+ * components:
+ *   securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ *       description: "Entrez votre token avec le préfixe `Bearer `, exemple: `Bearer abcde12345`"
+ */
+
+/**
+ * @swagger
  * /users/authenticate:
  *   post:
  *     summary: Authentifie un utilisateur
@@ -40,12 +51,13 @@
  *         description: Identifiants incorrects.
  */
 
+
 /**
  * @swagger
  * /users:
  *   get:
  *     summary: Récupère tous les utilisateurs
- *     description: Renvoie la liste de tous les utilisateurs enregistrés.
+ *     description: Renvoie la liste des utilisateurs enregistrés (Nécessite un token JWT).
  *     tags: [Users]
  *     security:
  *       - bearerAuth: []
@@ -62,17 +74,21 @@
  *                   id:
  *                     type: integer
  *                     example: 1
- *                   name:
+ *                   username:
  *                     type: string
  *                     example: "Alice"
+ *                   email:
+ *                     type: string
+ *                     example: "alice@email.com"
  */
+
 
 /**
  * @swagger
  * /users/{id}:
  *   get:
  *     summary: Récupère un utilisateur par ID
- *     description: Renvoie les détails d'un utilisateur spécifique.
+ *     description: Renvoie les détails d'un utilisateur spécifique (Nécessite un token JWT).
  *     tags: [Users]
  *     security:
  *       - bearerAuth: []
@@ -86,17 +102,6 @@
  *     responses:
  *       200:
  *         description: Succès - Retourne les informations de l'utilisateur.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 id:
- *                   type: integer
- *                   example: 1
- *                 name:
- *                   type: string
- *                   example: "Alice"
  *       404:
  *         description: Utilisateur non trouvé.
  */
@@ -131,12 +136,13 @@
  *         description: Données invalides.
  */
 
+
 /**
  * @swagger
  * /users/{id}:
  *   put:
  *     summary: Met à jour un utilisateur
- *     description: Met à jour les informations d'un utilisateur existant.
+ *     description: Met à jour les informations d'un utilisateur existant (Nécessite un token JWT).
  *     tags: [Users]
  *     security:
  *       - bearerAuth: []
@@ -174,7 +180,7 @@
  * /users/{id}:
  *   delete:
  *     summary: Supprime un utilisateur
- *     description: Supprime un utilisateur en fonction de son ID.
+ *     description: Supprime un utilisateur en fonction de son ID (Nécessite un token JWT).
  *     tags: [Users]
  *     security:
  *       - bearerAuth: []
